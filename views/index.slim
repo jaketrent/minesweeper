@@ -2,7 +2,7 @@
   h1 MineMopper
 
   .board(ng-cloak)
-    .row ng-repeat="row in board"
+    .row ng-repeat="row in board.cells"
       .cell ng-repeat="cell in row" ng-click="toggle($event, cell)" 
-        .result.hide
-          | {{cell}}
+        .result ng-show="cell.visible"
+          | {{cell.val}}
