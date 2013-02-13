@@ -3,7 +3,7 @@ class Minesweeper
 
   attr_accessor :board
 
-  def initialize height, width, difficulty
+  def initialize height=10, width=10, difficulty="easy"
     @board = gen_board height.to_i, width.to_i, difficulty
   end
 

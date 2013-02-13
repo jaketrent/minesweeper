@@ -8,5 +8,9 @@ mm.controller('BoardCtrl', ['$scope', '$http', function ($scope, $http) {
     .error(function (data) {
       alert('Error!');
     });
+
+  $scope.toggle = function ($event, cell) {
+    angular.element($event.target).children('.result').toggleClass('hide');
+  };
 }]);
 

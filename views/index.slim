@@ -1,7 +1,8 @@
-#main(ng-controller="BoardCtrl")
+#main ng-controller="BoardCtrl"
   h1 MineMopper
 
-  .board
+  .board(ng-cloak)
     .row ng-repeat="row in board"
-      .cell ng-repeat="cell in row"
-        | {{cell}}
+      .cell ng-repeat="cell in row" ng-click="toggle($event, cell)" 
+        .result.hide
+          | {{cell}}
