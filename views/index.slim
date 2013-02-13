@@ -1,1 +1,7 @@
-h1 Welcome to MineMopper
+#main(ng-controller="BoardCtrl")
+  h1 MineMopper
+
+  .board
+    .row ng-repeat="row in board"
+      .cell ng-repeat="cell in row"
+        | {{cell}}
