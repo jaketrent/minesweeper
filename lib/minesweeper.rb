@@ -1,7 +1,7 @@
 
 class Minesweeper
 
-  attr_reader :board
+  attr_accessor :board
 
   def initialize height, width, difficulty
     @board = gen_board height.to_i, width.to_i, difficulty
@@ -19,7 +19,7 @@ class Minesweeper
       medium: 0.4,
       hard: 0.6,
       insane: 0.8
-    }[difficulty.to_sym]
+    }[:easy]
   end
 
   def fill_in_board board
@@ -116,12 +116,12 @@ class Minesweeper
 
 end
 
-minesweeper = Minesweeper.new 4, 4, "easy"
+# minesweeper = Minesweeper.new 4, 4, "easy"
 
-minesweeper.find_mines
+# minesweeper.find_mines
 
-puts "Final"
-minesweeper.print_board
+# puts "Final"
+# minesweeper.print_board
 
 
 
