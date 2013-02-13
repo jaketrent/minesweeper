@@ -1,4 +1,5 @@
-source 'http://rubygems.org'
+source "http://rubygems.org"
 
-gem 'sinatra'
-gem 'thin'
+gem "sinatra"
+gem "thin"
+gem "slim"
