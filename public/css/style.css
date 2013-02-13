@@ -4,4 +4,3 @@ h1 { text-align: center; }
 .board { height: 320px; width: 320px; margin: 0 auto 0 auto;}
 .board .cell { cursor: pointer; float: left; height: 20px; width: 20px; line-height: 20px; font-size: 13px; text-align: center; color: #000; background: url("../img/cell-bg.png") no-repeat center; background-size: cover; }
 .board .cell:active { background: #ababab; }
-.board .hide { display: none; }
