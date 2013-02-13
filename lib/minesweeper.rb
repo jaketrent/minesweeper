@@ -3,15 +3,23 @@ class Minesweeper
 
   attr_reader :board
 
-  def initialize height, width, ratio
-    @board = gen_board height, width, ratio
+  def initialize height, width, difficulty
+    @board = gen_board height.to_i, width.to_i, difficulty
   end
 
-  def gen_board height, width, ratio
+  def gen_board height, width, difficulty
     blank_board = Array.new(height) { Array.new(width) }
-    board_with_mines = gen_mines blank_board, ratio
+    board_with_mines = gen_mines blank_board, gen_mine_ratio(difficulty)
     complete_board = fill_in_board board_with_mines
     complete_board
+  end
+
+  def gen_mine_ratio difficulty
+    { easy: 0.2,
+      medium: 0.4,
+      hard: 0.6,
+      insane: 0.8
+    }[difficulty.to_sym]
   end
 
   def fill_in_board board
@@ -103,14 +111,12 @@ class Minesweeper
         end
       end
     end
+    self
   end
 
 end
 
-minesweeper = Minesweeper.new 15, 30, 0.2
-
-puts "Inital"
-minesweeper.print_board
+minesweeper = Minesweeper.new 4, 4, "easy"
 
 minesweeper.find_mines
 
