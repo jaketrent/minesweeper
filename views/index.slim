@@ -3,6 +3,6 @@
 
   .board(ng-cloak)
     .row ng-repeat="row in game.board.cells"
-      .cell ng-repeat="cell in row" ng-click="game.clearCell(cell)" 
+      .cell ng-repeat="cell in row" ng-click="game.clearCell(cell)" right-click="game.flagCell(cell)"
         .result ng-show="cell.cleared" class="val-{{cell.val}}"
           | {{cell.val}}

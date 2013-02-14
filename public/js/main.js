@@ -1,5 +1,40 @@
 var mm = angular.module('mm', []);
 
+mm.directive('right-click', ['$parse', function ($parse) {
+  return function (scope, element, attr) {
+    console.log('directive');
+    element.bind('contextmenu', function (event) {
+      console.log('contextmenu');
+      event.preventDefault();
+      var fn = $parse(attr['right-click']);
+      scope.$apply(function () {
+        fn(scope, {
+          $event: event
+        });
+      });
+      return false;
+    });
+  };
+}]);
+
+// document.oncontextmenu = function (e) {
+//   console.log('on context menu' + e.which);
+//   e.preventDefault();
+//   return false;
+// }
+
+// mm.directive('right-click', function () {
+//   return function (scope, element, attr) {
+//     console.log('directive');
+//     element.bind('contextmenu', function (event) {
+//       console.log('contextmenu');
+//       event.preventDefault();
+//       var fn = scope.$eval(attr['right-click'])
+//       return false;
+//     });
+//   };
+// });
+
 mm.controller('BoardCtrl', ['$scope', '$http', function ($scope, $http) {
 
   function Cell(val, x, y) {
@@ -29,6 +64,10 @@ mm.controller('BoardCtrl', ['$scope', '$http', function ($scope, $http) {
   function Game() {
     return {
       board: null,
+      flagCell: function (cell) {
+        console.log('flagging cell');
+        cell.clear();
+      },
       clearCell: function (cell) {
         cell.clear();
         if (cell.isBomb()) {
