@@ -2,15 +2,8 @@ var mm = angular.module('mm', []);
 
 mm.controller('BoardCtrl', ['$scope', '$http', function ($scope, $http) {
 
-  var util = {
-    genUID: function () {
-      ("0000" + (Math.random()*Math.pow(36,4) << 0).toString(36)).substr(-4)  
-    }
-  };
-
   function Cell(val, x, y) {
     return {
-      id: util.genUID(),
       val: val,
       cleared: false,
       x: x,
@@ -19,7 +12,7 @@ mm.controller('BoardCtrl', ['$scope', '$http', function ($scope, $http) {
         this.cleared = true;
       },
       isBomb: function () {
-        return val == "*";
+        return val == "B";
       },
       isCleared: function () {
         return this.cleared;
@@ -99,7 +92,7 @@ mm.controller('BoardCtrl', ['$scope', '$http', function ($scope, $http) {
           _(board).each(function (row, y) {
             convertedBoard.cells.push([]); // new row
             _(row).each(function (col, x) {
-              convertedBoard.cells[y].push(new Cell(col, x, y));
+              convertedBoard.cells[y].push(new Cell(col == "*" ? "B" : col, x, y));
             });
           });
           return convertedBoard;
@@ -120,6 +113,5 @@ mm.controller('BoardCtrl', ['$scope', '$http', function ($scope, $http) {
   $scope.game = new Game()
   $scope.game.start();
 
-  
 }]);
 
