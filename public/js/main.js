@@ -8,11 +8,13 @@ mm.controller('BoardCtrl', ['$scope', '$http', function ($scope, $http) {
     }
   };
 
-  function Cell(val) {
+  function Cell(val, x, y) {
     return {
       id: util.genUID(),
       val: val,
       cleared: false,
+      x: x,
+      y: y,
       clear: function () {
         this.cleared = true;
       },
@@ -38,7 +40,47 @@ mm.controller('BoardCtrl', ['$scope', '$http', function ($scope, $http) {
         cell.clear();
         if (cell.isBomb()) {
           this.clearAllBombs()
+        } else if (cell.isBlank()) {
+          this.clearSurroundingCells(cell);
         }
+      },
+      cellAt: function (x, y) {
+        return (x == -1 || y == -1) ? null : this.board.cells[y][x];
+      },
+      clearSurroundingCells: function (cell) {
+        function clearIfValid(cell) {
+          if (cell && !cell.isCleared()) { 
+            this.clearCell(cell) 
+          }
+        }
+        // W
+        clearIfValid.call(this, this.cellAt(this.prevCol(cell.x), cell.y));
+        // E
+        clearIfValid.call(this, this.cellAt(this.nextCol(cell.x), cell.y));
+        // N
+        clearIfValid.call(this, this.cellAt(cell.x, this.upRow(cell.y)));
+        // S
+        clearIfValid.call(this, this.cellAt(cell.x, this.downRow(cell.y)));
+        // NW
+        clearIfValid.call(this, this.cellAt(this.prevCol(cell.x), this.upRow(cell.y)));
+        // NE
+        clearIfValid.call(this, this.cellAt(this.nextCol(cell.x), this.upRow(cell.y)));
+        // SW
+        clearIfValid.call(this, this.cellAt(this.prevCol(cell.x), this.downRow(cell.y)));
+        // SE
+        clearIfValid.call(this, this.cellAt(this.nextCol(cell.x), this.downRow(cell.y)));
+      },
+      prevCol: function (x) {
+        return x > 0 ? x - 1 : -1;
+      },
+      nextCol: function (x) {
+        return x < this.board.cells[0].length - 1 ? x + 1 : -1;
+      },
+      upRow: function (y) {
+        return y > 0 ? y - 1 : -1;
+      },
+      downRow: function (y) {
+        return y < this.board.cells.length - 1 ? y + 1 : -1;
       },
       clearAllBombs: function () {
         _(this.board.cells).each(function (row) {
@@ -50,23 +92,23 @@ mm.controller('BoardCtrl', ['$scope', '$http', function ($scope, $http) {
         });
       },
       start: function () {
-        function convert_board(board) {
-          var conv_board = {
+        function convertBoard(board) {
+          var convertedBoard = {
             cells: []
           };
-          _(board).each(function (row, rowIndx) {
-            conv_board.cells.push([]); // new row
-            _(row).each(function (col, colIndx) {
-              conv_board.cells[rowIndx].push(new Cell(col));
+          _(board).each(function (row, y) {
+            convertedBoard.cells.push([]); // new row
+            _(row).each(function (col, x) {
+              convertedBoard.cells[y].push(new Cell(col, x, y));
             });
           });
-          return conv_board;
+          return convertedBoard;
         }
         var self = this;
 
         $http.get('/ws/board/10/10/easy')
           .success(function (data) {
-            self.board = convert_board(data);
+            self.board = convertBoard(data);
           })
           .error(function (data) {
             alert('Error!');
