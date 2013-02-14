@@ -26,6 +26,9 @@ mm.controller('GameCtrl', ['$scope', '$http', function ($scope, $http) {
       flag: function () {
         this.flagged = true;
       },
+      isFlagged: function () {
+        return this.flagged;
+      },
       isBomb: function () {
         return val == "B";
       },
@@ -44,9 +47,22 @@ mm.controller('GameCtrl', ['$scope', '$http', function ($scope, $http) {
   function Game() {
     return {
       board: null,
+      gameOver: false,
+      gameWin: false,
+      calcIsGameWin: function () {
+        var gameWin = true;
+        _(this.board.cells).each(function (row) {
+          _(row).each(function (cell) {
+            if (cell.isBomb() && !cell.isFlagged()) {
+              gameWin = false;
+            }
+          });
+        });
+        this.gameWin = gameWin;
+      },
       flagCell: function (cell) {
-        console.log('flagging cell');
         cell.flag();
+        this.calcIsGameWin();
       },
       clearCell: function (cell) {
         cell.clear();
@@ -55,6 +71,7 @@ mm.controller('GameCtrl', ['$scope', '$http', function ($scope, $http) {
         } else if (cell.isBlank()) {
           this.clearSurroundingCells(cell);
         }
+        this.calcIsGameWin();
       },
       cellAt: function (x, y) {
         return (x == -1 || y == -1) ? null : this.board.cells[y][x];
@@ -102,6 +119,7 @@ mm.controller('GameCtrl', ['$scope', '$http', function ($scope, $http) {
             }
           });
         });
+        this.gameOver = true;
       },
       start: function () {
 
@@ -121,7 +139,7 @@ mm.controller('GameCtrl', ['$scope', '$http', function ($scope, $http) {
         var self = this;
         this.board = {};
         
-        $http.get('/ws/board/10/10/easy')
+        $http.get('/ws/board/5/5/easy')
           .success(function (data) {
             self.board = convertBoard(data);
           })

@@ -1,9 +1,6 @@
 #main.container ng-controller="GameCtrl"
   h1 MineMopper
 
-  .msgs(ng-cloak)
-    pass
-
   .board(ng-cloak)
     .row ng-repeat="row in game.board.cells"
       .cell ng-repeat="cell in row" ng-click="game.clearCell(cell)" right-click="game.flagCell(cell)"
@@ -11,6 +8,12 @@
           | {{cell.val}}
         .flag ng-show="cell.flagged && !cell.cleared"
           | &iquest;
+          
+  .flash(ng-cloak)
+    h2.msg.success ng-show="game.gameWin"
+      | You won!
+    h2.msg.failure ng-show="game.gameOver"
+      | Game over
 
   .ctrls(ng-cloak)
     select
