@@ -18,7 +18,7 @@ mm.controller('BoardCtrl', ['$scope', '$http', function ($scope, $http) {
     return conv_board;
   }
 
-  $http.get('/ws/board/16/16/easy')
+  $http.get('/ws/board/10/10/easy')
     .success(function (data) {
       $scope.board = convert_board(data);
     })
