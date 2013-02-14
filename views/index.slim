@@ -1,8 +1,21 @@
-#main ng-controller="BoardCtrl"
+#main.container ng-controller="GameCtrl"
   h1 MineMopper
+
+  .msgs(ng-cloak)
+    pass
 
   .board(ng-cloak)
     .row ng-repeat="row in game.board.cells"
       .cell ng-repeat="cell in row" ng-click="game.clearCell(cell)" right-click="game.flagCell(cell)"
         .result ng-show="cell.cleared" class="val-{{cell.val}}"
           | {{cell.val}}
+        .flag ng-show="cell.flagged && !cell.cleared"
+          | &iquest;
+
+  .ctrls(ng-cloak)
+    select
+      option value="easy" Easy
+      option value="medium" Medium
+      option value="hard" Hard
+      option value="insane" Insane
+    button ng-click="game.start()" Start New Game

@@ -1,50 +1,30 @@
 var mm = angular.module('mm', []);
 
-mm.directive('right-click', ['$parse', function ($parse) {
+mm.directive('rightClick', function () {
   return function (scope, element, attr) {
-    console.log('directive');
     element.bind('contextmenu', function (event) {
-      console.log('contextmenu');
       event.preventDefault();
-      var fn = $parse(attr['right-click']);
-      scope.$apply(function () {
-        fn(scope, {
-          $event: event
-        });
-      });
+      scope.$eval(attr['rightClick']);
+      scope.$apply();
       return false;
     });
-  };
-}]);
+  }
+});
 
-// document.oncontextmenu = function (e) {
-//   console.log('on context menu' + e.which);
-//   e.preventDefault();
-//   return false;
-// }
-
-// mm.directive('right-click', function () {
-//   return function (scope, element, attr) {
-//     console.log('directive');
-//     element.bind('contextmenu', function (event) {
-//       console.log('contextmenu');
-//       event.preventDefault();
-//       var fn = scope.$eval(attr['right-click'])
-//       return false;
-//     });
-//   };
-// });
-
-mm.controller('BoardCtrl', ['$scope', '$http', function ($scope, $http) {
+mm.controller('GameCtrl', ['$scope', '$http', function ($scope, $http) {
 
   function Cell(val, x, y) {
     return {
       val: val,
       cleared: false,
+      flagged: false,
       x: x,
       y: y,
       clear: function () {
         this.cleared = true;
+      },
+      flag: function () {
+        this.flagged = true;
       },
       isBomb: function () {
         return val == "B";
@@ -66,7 +46,7 @@ mm.controller('BoardCtrl', ['$scope', '$http', function ($scope, $http) {
       board: null,
       flagCell: function (cell) {
         console.log('flagging cell');
-        cell.clear();
+        cell.flag();
       },
       clearCell: function (cell) {
         cell.clear();
@@ -124,6 +104,7 @@ mm.controller('BoardCtrl', ['$scope', '$http', function ($scope, $http) {
         });
       },
       start: function () {
+
         function convertBoard(board) {
           var convertedBoard = {
             cells: []
@@ -136,8 +117,10 @@ mm.controller('BoardCtrl', ['$scope', '$http', function ($scope, $http) {
           });
           return convertedBoard;
         }
-        var self = this;
 
+        var self = this;
+        this.board = {};
+        
         $http.get('/ws/board/10/10/easy')
           .success(function (data) {
             self.board = convertBoard(data);

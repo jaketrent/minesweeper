@@ -1,7 +1,9 @@
 body { background: #efefef; font-family: sans-serif;}
 
+.container { margin: 0 auto 0 auto; width: 320px; }
+
 h1 { text-align: center; }
-.board { height: 320px; width: 320px; margin: 0 auto 0 auto;}
+.board { height: 320px; width: 320px; margin: 0 auto; }
 .board .cell { cursor: pointer; float: left; height: 32px; width: 32px; line-height: 32px; font-size: 20px; text-align: center; color: #000; background: url("../img/cell-bg.png") no-repeat center; background-size: cover; font-weight: bold;}
 .board .cell:active { background: #ababab; }
 
@@ -16,3 +18,7 @@ h1 { text-align: center; }
 .result.val-6,
 .result.val-7,
 .result.val-8 { color: purple; }
+
+.flag { color: #ff2730; background: #efefef; }
+
+.ctrls { text-align: center; }
