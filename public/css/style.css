@@ -2,7 +2,7 @@ body { background: #efefef; font-family: sans-serif;}
 
 .container { margin: 0 auto 0 auto; width: 320px; }
 
-h1 { text-align: center; }
+.title { text-align: center; font-size: 12px; font-weight: bold; }
 
 .flash .msg { letter-spacing: 3px; text-align: center; }
 .msg.success { color: #6cc92c; }

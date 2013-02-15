@@ -1,6 +1,10 @@
+pre.title 
+  | |\/| o ._   _   _       _   _  ._   _  ._ 
+    |  | | | | (/_ _> \/\/ (/_ (/_ |_) (/_ |  
+                                   |          
+  
 #main.container ng-controller="GameCtrl"
-  h1 MineMopper
-
+  
   .board(ng-cloak class="mode-{{game.mode.name}}")
     .row ng-repeat="row in game.board.cells"
       .cell ng-repeat="cell in row" ng-click="game.clearCell(cell)" right-click="game.flagCell(cell)"

@@ -14,7 +14,7 @@ get "/ws/board/:difficulty" do
   difficulties = {
     easy: { height: 5, width: 5, mines: 5 },
     normal: { height: 10, width: 10, mines: 10 },
-    hard: { height: 10, width: 10, mines: 50 },
+    hard: { height: 10, width: 10, mines: 30 },
     insane: { height: 10, width: 10, mines: 80 },
   }
 
