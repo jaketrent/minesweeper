@@ -18,6 +18,7 @@ mm.controller('GameCtrl', ['$scope', '$http', function ($scope, $http) {
       val: val,
       cleared: false,
       flagged: false,
+      hit: false,
       x: x,
       y: y,
       clear: function () {
@@ -25,6 +26,12 @@ mm.controller('GameCtrl', ['$scope', '$http', function ($scope, $http) {
       },
       flag: function () {
         this.flagged = true;
+      },
+      hit: function () {
+        this.hit = true;
+      },
+      isHit: function () {
+        return this.hit;
       },
       isFlagged: function () {
         return this.flagged;
@@ -48,30 +55,38 @@ mm.controller('GameCtrl', ['$scope', '$http', function ($scope, $http) {
     return {
       board: null,
       gameOver: false,
-      gameWin: false,
-      calcIsGameWin: function () {
-        var gameWin = true;
+      gameWon: false,
+      isStopGame: function () {
+        return this.gameOver || this.gameWon;
+      },
+      calcIsGameWon: function () {
+        var gameWon = true;
         _(this.board.cells).each(function (row) {
           _(row).each(function (cell) {
             if (cell.isBomb() && !cell.isFlagged()) {
-              gameWin = false;
+              gameWon = false;
             }
           });
         });
-        this.gameWin = gameWin;
+        this.gameWon = gameWon;
       },
       flagCell: function (cell) {
+        if (this.isStopGame()) return;
+
         cell.flag();
-        this.calcIsGameWin();
+        this.calcIsGameWon();
       },
       clearCell: function (cell) {
+        if (this.isStopGame()) return;
+
         cell.clear();
         if (cell.isBomb()) {
+          cell.hit();
           this.clearAllBombs()
         } else if (cell.isBlank()) {
           this.clearSurroundingCells(cell);
         }
-        this.calcIsGameWin();
+        this.calcIsGameWon();
       },
       cellAt: function (x, y) {
         return (x == -1 || y == -1) ? null : this.board.cells[y][x];

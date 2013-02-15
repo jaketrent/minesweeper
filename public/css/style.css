@@ -8,12 +8,13 @@ h1 { text-align: center; }
 .msg.success { color: #6cc92c; }
 .msg.failure { color: #c93722; }
 
-.board { height: 320px; width: 320px; margin: 0 auto; }
+.board { overflow: hidden; height: 320px; width: 320px; margin: 0 auto; }
 .board .cell { cursor: pointer; float: left; height: 64px; width: 64px; line-height: 64px; font-size: 40px; text-align: center; color: #000; background: url("../img/cell-bg.png") no-repeat center; background-size: cover; font-weight: bold;}
 .board .cell:active { background: #ababab; }
 
+.result.hit-true { background: red; }
 .result.val-B { color: transparent; }
-.result.val-B:before { color: red; content:"\2020"; display: block; text-align: center;}
+.result.val-B:before { color: #000; content:"\2020"; display: block; text-align: center;}
 .result.val-0 { color: transparent; background: #ababab; }
 .result.val-1 { color: blue; }
 .result.val-2 { color: green; }

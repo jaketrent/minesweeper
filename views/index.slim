@@ -4,11 +4,11 @@
   .board(ng-cloak)
     .row ng-repeat="row in game.board.cells"
       .cell ng-repeat="cell in row" ng-click="game.clearCell(cell)" right-click="game.flagCell(cell)"
-        .result ng-show="cell.cleared" class="val-{{cell.val}}"
+        .result ng-show="cell.cleared" class="val-{{cell.val}} hit-{{cell.isHit()}}"
           | {{cell.val}}
         .flag ng-show="cell.flagged && !cell.cleared"
           | &iquest;
-          
+
   .flash(ng-cloak)
     h2.msg.success ng-show="game.gameWin"
       | You won!
