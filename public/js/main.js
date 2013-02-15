@@ -24,8 +24,8 @@ mm.controller('GameCtrl', ['$scope', '$http', function ($scope, $http) {
       clear: function () {
         this.cleared = true;
       },
-      flag: function () {
-        this.flagged = true;
+      toggleFlag: function () {
+        this.flagged = !this.flagged;
       },
       hit: function () {
         this.hit = true;
@@ -75,7 +75,7 @@ mm.controller('GameCtrl', ['$scope', '$http', function ($scope, $http) {
       flagCell: function (cell) {
         if (this.isStopGame()) return;
 
-        cell.flag();
+        cell.toggleFlag();
         this.calcIsGameWon();
       },
       clearCell: function (cell) {
@@ -138,6 +138,14 @@ mm.controller('GameCtrl', ['$scope', '$http', function ($scope, $http) {
         });
         this.gameOver = true;
       },
+      mode: function ($event) {
+        console.log($event.target);
+      },
+      resetState: function () {
+        this.board = {};
+        this.gameWon = false;
+        this.gameOver = false;
+      },
       start: function () {
 
         function convertBoard(board) {
@@ -154,7 +162,7 @@ mm.controller('GameCtrl', ['$scope', '$http', function ($scope, $http) {
         }
 
         var self = this;
-        this.board = {};
+        this.resetState();
         
         $http.get('/ws/board/5/5/easy')
           .success(function (data) {
