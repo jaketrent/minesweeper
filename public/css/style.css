@@ -33,3 +33,6 @@ body { background: #efefef; font-family: sans-serif;}
 .flag { color: #ff2730; background: #efefef; }
 
 .ctrls { text-align: center; }
+
+.footer { text-align: center; margin-top: 20px; color: #ababab; }
+.footer .header { font-size: 10px; }

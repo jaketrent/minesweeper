@@ -22,3 +22,9 @@ pre.title
   .ctrls(ng-cloak)
     select ng-model="game.newGameMode" ng-options="m.name for m in game.modes"
     button ng-click="game.start()" Start New Game
+
+  .footer
+    h3.header Brought to you by:
+    div
+      a href="http://mixpanel.com/f/partner"
+        img src="http://mixpanel.com/site_media/images/partner/badge_blue.png" alt="Mobile Analytics"
