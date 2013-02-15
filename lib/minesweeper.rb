@@ -3,23 +3,15 @@ class Minesweeper
 
   attr_accessor :board
 
-  def initialize height=10, width=10, difficulty="easy"
-    @board = gen_board height.to_i, width.to_i, difficulty
+  def initialize params
+    @board = gen_board params[:height], params[:width], params[:mines]
   end
 
-  def gen_board height, width, difficulty
+  def gen_board height, width, mines
     blank_board = Array.new(height) { Array.new(width) }
-    board_with_mines = gen_mines blank_board, gen_mine_ratio(difficulty)
+    board_with_mines = gen_mines blank_board, mines
     complete_board = fill_in_board board_with_mines
     complete_board
-  end
-
-  def gen_mine_ratio difficulty
-    { easy: 0.2,
-      medium: 0.4,
-      hard: 0.6,
-      insane: 0.8
-    }[:easy]
   end
 
   def fill_in_board board
@@ -33,12 +25,10 @@ class Minesweeper
     board
   end
 
-  def gen_mines board, ratio
+  def gen_mines board, mines
     height = board.count
     width = board[0].count
-    total_cells = height * width
-    num_mine_cells = (total_cells * ratio).to_i
-    num_mine_cells.times do
+    mines.times do
       board[Random.rand(height)][Random.rand(width)] = "*"
     end
     board

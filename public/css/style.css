@@ -9,8 +9,13 @@ h1 { text-align: center; }
 .msg.failure { color: #c93722; }
 
 .board { overflow: hidden; height: 320px; width: 320px; margin: 0 auto; }
-.board .cell { cursor: pointer; float: left; height: 64px; width: 64px; line-height: 64px; font-size: 40px; text-align: center; color: #000; background: url("../img/cell-bg.png") no-repeat center; background-size: cover; font-weight: bold;}
+.board .cell { cursor: pointer; float: left; text-align: center; color: #000; background: url("../img/cell-bg.png") no-repeat center; background-size: cover; font-weight: bold;}
 .board .cell:active { background: #ababab; }
+
+.board.mode-easy .cell { height: 64px; width: 64px; line-height: 64px; font-size: 40px; }
+.board.mode-normal .cell,
+.board.mode-hard .cell,
+.board.mode-insane .cell { height: 32px; width: 32px; line-height: 32px; font-size: 20px; }
 
 .result.hit-true { background: red; }
 .result.val-B { color: transparent; }

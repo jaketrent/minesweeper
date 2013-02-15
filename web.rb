@@ -9,6 +9,14 @@ get "/" do
   slim :index
 end
 
-get "/ws/board/:height/:width/:difficulty" do
-  json (Minesweeper.new params[:height], params[:width], params[:difficulty]).find_mines.board
+get "/ws/board/:difficulty" do
+
+  difficulties = {
+    easy: { height: 5, width: 5, mines: 5 },
+    normal: { height: 10, width: 10, mines: 10 },
+    hard: { height: 10, width: 10, mines: 50 },
+    insane: { height: 10, width: 10, mines: 80 },
+  }
+
+  json (Minesweeper.new difficulties[params[:difficulty].to_sym]).find_mines.board
 end

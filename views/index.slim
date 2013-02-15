@@ -1,7 +1,7 @@
 #main.container ng-controller="GameCtrl"
   h1 MineMopper
 
-  .board(ng-cloak)
+  .board(ng-cloak class="mode-{{game.mode.name}}")
     .row ng-repeat="row in game.board.cells"
       .cell ng-repeat="cell in row" ng-click="game.clearCell(cell)" right-click="game.flagCell(cell)"
         .result ng-show="cell.cleared" class="val-{{cell.val}} hit-{{cell.isHit()}}"
@@ -16,4 +16,5 @@
       | Game over
 
   .ctrls(ng-cloak)
+    select ng-model="game.newGameMode" ng-options="m.name for m in game.modes"
     button ng-click="game.start()" Start New Game

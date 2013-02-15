@@ -52,10 +52,19 @@ mm.controller('GameCtrl', ['$scope', '$http', function ($scope, $http) {
   }
 
   function Game() {
+    var modes = [
+      { name: "easy" },
+      { name: "normal" },
+      { name: "hard" },
+      { name: "insane" }
+    ];
     return {
       board: null,
       gameOver: false,
       gameWon: false,
+      modes: modes,
+      mode: modes[0],
+      newGameMode: modes[0],
       isStopGame: function () {
         return this.gameOver || this.gameWon;
       },
@@ -145,6 +154,7 @@ mm.controller('GameCtrl', ['$scope', '$http', function ($scope, $http) {
         this.board = {};
         this.gameWon = false;
         this.gameOver = false;
+        this.mode = this.newGameMode;
       },
       start: function () {
 
@@ -164,9 +174,10 @@ mm.controller('GameCtrl', ['$scope', '$http', function ($scope, $http) {
         var self = this;
         this.resetState();
         
-        $http.get('/ws/board/5/5/easy')
+        $http.get('/ws/board/' + this.mode.name)
           .success(function (data) {
             self.board = convertBoard(data);
+            console.log(self.board);
           })
           .error(function (data) {
             alert('Error!');
