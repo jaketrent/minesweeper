@@ -65,6 +65,8 @@ mm.controller('GameCtrl', ['$scope', '$http', function ($scope, $http) {
           _(row).each(function (cell) {
             if (cell.isBomb() && !cell.isFlagged()) {
               gameWon = false;
+            } else if (!cell.isBomb() && !cell.isCleared()) {
+              gameWon = false;
             }
           });
         });
