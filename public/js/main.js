@@ -63,8 +63,8 @@ mm.controller('GameCtrl', ['$scope', '$http', function ($scope, $http) {
       gameOver: false,
       gameWon: false,
       modes: modes,
-      mode: modes[0],
-      newGameMode: modes[0],
+      mode: modes[1],
+      newGameMode: modes[1],
       isStopGame: function () {
         return this.gameOver || this.gameWon;
       },
@@ -177,7 +177,6 @@ mm.controller('GameCtrl', ['$scope', '$http', function ($scope, $http) {
         $http.get('/ws/board/' + this.mode.name)
           .success(function (data) {
             self.board = convertBoard(data);
-            console.log(self.board);
           })
           .error(function (data) {
             alert('Error!');
