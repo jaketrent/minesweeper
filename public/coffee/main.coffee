@@ -67,7 +67,9 @@ mm.controller "GameCtrl", ["$scope", "$http", ($scope, $http) ->
             gameWon = false
           else gameWon = false  if not cell.isBomb() and not cell.isCleared()
       if gameWon
-        analytics.track "Won game", { mode: @mode.name }
+        analytics.track "Game end"
+          result: "Win"
+          mode: @mode.name
       @gameWon = gameWon
 
     flagCell: (cell) ->
@@ -124,7 +126,8 @@ mm.controller "GameCtrl", ["$scope", "$http", ($scope, $http) ->
         _(row).each (cell) ->
           cell.clear()  if cell.isBomb()
       @gameOver = true
-      analytics.track "Game over",
+      analytics.track "Game end",
+        result: "Loss"
         mode: @mode.name
 
     mode: ($event) ->
