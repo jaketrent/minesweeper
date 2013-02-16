@@ -52,6 +52,7 @@ mm.controller "GameCtrl", ["$scope", "$http", ($scope, $http) ->
     board: null
     gameOver: false
     gameWon: false
+    gameError: false
     modes: modes
     mode: modes[1]
     newGameMode: modes[1]
@@ -147,9 +148,10 @@ mm.controller "GameCtrl", ["$scope", "$http", ($scope, $http) ->
       @resetState()
       $http.get("/ws/board/" + @mode.name).success((data) =>
         @board = convertBoard(data)
+        @gameError = true;
+        
         analytics.track "New game", { mode: @mode.name }
-      ).error (data) ->
-        alert "Error!"
+      ).error (data) =>
 
   $scope.game = new Game()
   $scope.game.start()

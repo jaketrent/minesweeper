@@ -18,6 +18,8 @@ pre.title
       | You won!
     h2.msg.failure ng-show="game.gameOver"
       | Game over
+    h2.msg.failure ng-show="game.gameError"
+      | Game error -- sorry :(
 
   .ctrls(ng-cloak)
     select ng-model="game.newGameMode" ng-options="m.name for m in game.modes"
