@@ -5,7 +5,8 @@ describe Minesweeper do
   
   describe "#initialize" do
 
-    let(:ms) { Minesweeper.new 5, 6, "easy" }
+    let(:difficulty) { { height: 5, width: 6, mines: 5 } }
+    let(:ms) { Minesweeper.new difficulty }
 
     it "has a board" do
       expect(ms).to respond_to :board
@@ -28,17 +29,6 @@ describe Minesweeper do
         row.include? "."
       end
      any_blanks.count.should be > 0
-    end
-
-  end
-
-  describe "#board" do
-
-    it "overwrites the board" do
-      ms = Minesweeper.new 2, 2, "easy"
-      ms.board = [[".", ".", "."],[".", "*", "."],[".", ".", "."]] 
-      expect(ms.board.count).to eq 3
-      expect(ms.board[0].count).to eq 3
     end
 
   end
