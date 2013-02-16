@@ -3,10 +3,29 @@ require "sinatra/json"
 require "slim"
 require "./lib/minesweeper"
 
+# class CoffeeEngine < Sinatra::Base
+  
+#   set :views,   File.dirname(__FILE__)    + '/public/coffee'
+  
+#   get "/coffee/*.js" do
+#     puts 'getting coffee'
+#     filename = params[:splat].first
+#     coffee filename.to_sym
+#   end
+  
+# end
+
+# use CoffeeEngine
+
 set :slim, :pretty => true
 
 get "/" do
   slim :index
+end
+
+get "/coffee/*.js" do
+  filename = params[:splat].first
+  coffee "../public/coffee/#{filename}".to_sym
 end
 
 get "/ws/board/:difficulty" do

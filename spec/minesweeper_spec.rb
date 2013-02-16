@@ -23,7 +23,7 @@ describe Minesweeper do
      any_bombs.count.should be > 0
     end
 
-    it "has at least one blank" do
+    it "has at leastw one blank" do
       any_blanks = ms.board.find do |row|
         row.include? "."
       end
