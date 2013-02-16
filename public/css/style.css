@@ -36,3 +36,6 @@ body { background: #efefef; font-family: sans-serif;}
 
 .footer { text-align: center; margin-top: 20px; color: #ababab; }
 .footer .header { font-size: 10px; }
+
+.sponsor { display: inline-block; margin-right: 10px; }
+.sponsor:last-child { margin-right: 0; }
