@@ -80,7 +80,7 @@ mm.controller('GameCtrl', ['$scope', '$http', function ($scope, $http) {
           });
         });
         if (gameWon) {
-          mixpanel.track("Won game", { "mode": this.mode.name });
+          analytics.track("Won game", { "mode": this.mode.name });
         }
         this.gameWon = gameWon;
       },
@@ -149,7 +149,7 @@ mm.controller('GameCtrl', ['$scope', '$http', function ($scope, $http) {
           });
         });
         this.gameOver = true;
-        mixpanel.track("Game over", { "mode": this.mode.name });
+        analytics.track("Game over", { "mode": this.mode.name });
       },
       mode: function ($event) {
         console.log($event.target);
@@ -181,7 +181,7 @@ mm.controller('GameCtrl', ['$scope', '$http', function ($scope, $http) {
         $http.get('/ws/board/' + this.mode.name)
           .success(function (data) {
             self.board = convertBoard(data);
-            mixpanel.track("New game");
+            analytics.track("New game", { "mode": self.mode.name });
           })
           .error(function (data) {
             alert('Error!');
